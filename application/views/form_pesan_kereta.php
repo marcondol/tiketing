@@ -31,15 +31,17 @@
               <h4 class="text-bold text-capitalize">Pemesanan</h4>
               <div class="offset-md-top-30 offset-top-20 range range-xs-center">
                 <div class="cell-md-8">
+                <pre>
                 <?php
                   // print_r($kereta_detail);
                 foreach($kereta_detail as $value) {
-                  // print_r($value);
+                  print_r($value);
                 ?>
+                </pre>
                 <table class="table table-striped text-left">
                       <tbody>
                         <tr>
-                           <td colspan="4"><?=$value->detail_info->depart->train_name.' - '.$value->detail_info->depart->from_st_name.' '.$value->detail_info->depart->to_st_name?></td>
+                           <td colspan="4"><?=$value->detail_info->depart->train_name.' - '.$value->detail_info->depart->from_st_name.' '.$value->detail_info->depart->to_st_name.' '.$value->detail_info->depart->class.' '.$value->detail_info->depart->sub_class?></td>
                         </tr>
                         <tr>
                            <td><?=$value->detail_info->depart->train_name?></td>
@@ -55,6 +57,7 @@
                               switch($key){
                                  case "adult":
                                  $penumpang += $prices->pax;
+                                 $adult_type = "adult";
                               ?>
                            <tr>
                               <td><?=$key?></td>
@@ -62,11 +65,12 @@
                               <td>Jumlah</td>
                               <td><?=$prices->pax?></td>
                            </tr>
-                                 <?php
-                                 break;
-                                 case "infant":
-                                 $infant += $prices->pax;
-                                 ?>
+                              <?php
+                              break;
+                              case "infant":
+                              $infant += $prices->pax;
+                              $infant_type = "infant";
+                              ?>
                            <tr>
                               <td><?=$key?></td>
                               <td><?=$prices->price?></td>
@@ -89,27 +93,27 @@
                       </tbody>
                  </table>
                   <!-- RD Mailform-->
-                  <form data-form-output="form-output-global" data-form-type="contact" method="post" action="<?=base_url()?>pesawat/order" class="range rd-mailform text-left">
+                  <form data-form-output="form-output-global" data-form-type="contact" method="post" action="<?=base_url()?>kereta/order" class="range rd-mailform text-left">
                      <div class="cell-sm-12">
                         <h4>Informasi Pemesan</h4>
                      </div>
                      <div class="cell-sm-6">
                       <div class="form-group">
+                         <input type="hidden" name="session_id" value="<?=$value->session_id?>">
                         <label for="contact-name" class="form-label form-label-outside">Nama</label>
-                        <input id="contact-name" type="text" name="name" data-constraints="@Required" class="form-control form-control-gray">
-                        <input type="hidden" name="session_id" value="<?=$value->session_id?>">
+                        <input id="contact-name" type="text" name="cust_name" data-constraints="@Required" class="form-control form-control-gray">
                       </div>
                      </div>
                      <div class="cell-sm-6 offset-top-20 offset-sm-top-0">
                       <div class="form-group">
                         <label for="telephone" class="form-label form-label-outside">No Telepon</label>
-                        <input id="telephone" type="text" name="telephone" data-constraints="@Required" class="form-control form-control-gray">
+                        <input id="telephone" type="text" name="cust_phone" data-constraints="@Required" class="form-control form-control-gray">
                       </div>
                      </div>
                      <div class="cell-sm-6 offset-top-20">
                       <div class="form-group">
                         <label for="contact-email" class="form-label form-label-outside">E-mail</label>
-                        <input id="contact-email" type="email" name="email" data-constraints="@Required @Email" class="form-control form-control-gray">
+                        <input id="contact-email" type="email" name="cust_email" data-constraints="@Required @Email" class="form-control form-control-gray">
                       </div>
                      </div>
 
@@ -121,42 +125,29 @@
                         </div>
                         <div class="cell-sm-6 offset-top-20">
                          <div class="form-group">
-                           <label for="pax_type" class="form-label form-label-outside">Pax Type</label>
-                           <input id="pax_type" type="text" name="pax_type_<?=$x?>" data-constraints="@Required" value="<?=$key?>" class="form-control form-control-gray">
+                           <label for="pax_type" class="form-label form-label-outside">Tipe Penumpang</label>
+                           <input id="pass_type" type="text" name="pax_type_<?=$x?>" data-constraints="@Required" readonly value="<?=$adult_type?>" class="form-control form-control-gray">
                          </div>
                         </div>
 
                         <div class="cell-sm-6 offset-top-20">
                          <div class="form-group">
-                           <label for="title" class="form-label form-label-outside">Tittle</label>
-                           <select id="title" type="text" name="title_<?=$x?>" data-constraints="@Required " >
-                              <option value="mr">Tuan</option>
-                              <option value="ms">Nyonya</option>
-                              <option value="mrs">Nona</option>
-                              <option value="chd">Anak</option>
-                              <option value="inf">Bayi</option>
-                           </select>
-                         </div>
-                        </div>
-
-                        <div class="cell-sm-6 offset-top-20">
-                         <div class="form-group">
-                           <label for="firs_name" class="form-label form-label-outside">Nama Depan</label>
-                           <input id="firs_name" type="text" name="firs_name_<?=$x?>" data-constraints="@Required " class="form-control form-control-gray">
-                         </div>
-                        </div>
-
-                        <div class="cell-sm-6 offset-top-20">
-                         <div class="form-group">
-                           <label for="last_name" class="form-label form-label-outside">Nama Belakang</label>
-                           <input id="last_name" type="text" name="last_name_<?=$x?>" data-constraints="@Required " class="form-control form-control-gray">
+                           <label for="firs_name" class="form-label form-label-outside">Nama Penumpang</label>
+                           <input id="firs_name" type="text" name="name_<?=$x?>" data-constraints="@Required " class="form-control form-control-gray">
                          </div>
                         </div>
 
                         <div class="cell-sm-6 offset-top-20">
                          <div class="form-group">
                            <label for="id_no" class="form-label form-label-outside">No Identitas</label>
-                           <input id="id_no" type="text" name="id_no_<?=$x?>" data-constraints="@Required " class="form-control form-control-gray">
+                           <input id="id_no" type="text" name="id_card_<?=$x?>" data-constraints="@Required " class="form-control form-control-gray">
+                         </div>
+                        </div>
+
+                        <div class="cell-sm-6 offset-top-20">
+                         <div class="form-group">
+                           <label for="id_no" class="form-label form-label-outside">No Telp</label>
+                           <input id="hp_<?=$x?>" type="text" name="hp_<?=$x?>" data-constraints="@Required " class="form-control form-control-gray">
                          </div>
                         </div>
 
@@ -167,26 +158,6 @@
                          </div>
                         </div>
 
-                        <div class="cell-sm-6 offset-top-20">
-                         <div class="form-group">
-                           <label for="pasport" class="form-label form-label-outside">No pasport</label>
-                           <input id="pasport" type="text" name="pasport_<?=$x?>" data-constraints="@Required " class="form-control form-control-gray">
-                         </div>
-                        </div>
-
-                        <div class="cell-sm-6 offset-top-20">
-                         <div class="form-group">
-                           <label for="expire_pasport" class="form-label form-label-outside">Expire Pasport</label>
-                           <input id="expire_pasport" type="text" data-time-picker="dateall" name="expire_pasport_<?=$x?>" data-constraints="@Required " class="form-control form-control-gray">
-                         </div>
-                        </div>
-
-                        <div class="cell-sm-6 offset-top-20">
-                         <div class="form-group">
-                           <label for="country_pasport" class="form-label form-label-outside">Negara Passport</label>
-                           <input id="country_pasport" type="text" name="country_pasport_<?=$x?>" data-constraints="@Required " class="form-control form-control-gray">
-                         </div>
-                        </div>
                         <br>
                      <?php
                         }
@@ -200,8 +171,8 @@
                         </div>
                         <div class="cell-sm-6 offset-top-20">
                          <div class="form-group">
-                           <label for="pax_type" class="form-label form-label-outside">Pax Type</label>
-                           <input id="pax_type" type="text" name="pax_type_<?=$x?>" data-constraints="@Required"  class="form-control form-control-gray">
+                           <label for="pax_type" class="form-label form-label-outside">Tipe penumpang</label>
+                           <input id="pax_type" type="text" name="pax_type_<?=$x?>" data-constraints="@Required" value="<?=$infant_type?>" class="form-control form-control-gray">
                          </div>
                         </div>
 

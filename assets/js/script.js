@@ -1287,6 +1287,7 @@ $document.ready(function () {
   /**
    * RD Mailform
    */
+  /*
   if (plugins.rdMailForm.length) {
     var i, j, k,
         msg = {
@@ -1365,7 +1366,7 @@ $document.ready(function () {
       });
     }
   }
-
+*/
   /**
    * PhotoSwipe Gallery
    * @description Enables PhotoSwipe Gallery plugin

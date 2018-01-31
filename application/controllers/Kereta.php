@@ -35,6 +35,17 @@ class Kereta extends CI_Controller {
       $arr_data = json_decode(base64_decode(urldecode($session_id)),true);
       $detail_data['kereta_detail'][] = $this->kereta_model->get_train_detail($arr_data);
       $this->load->view('form_pesan_kereta',$detail_data);
+   }
+
+   public function order(){
+      $arr_data = $this->input->post();
+      foreach($arr_data as $key=>$val){
+         $data_post[$key] = preg_replace('/(\d{1,2})( |-|\/)(\d{1,2})( |-|\/)(\d{1,4})/', '$5-$3-$1', $val);
+      }
+
+      $detail_data['kereta_order'] = $this->kereta_model->get_train_book($data_post);
+      return;
+		$this->load->view('sukses_order_kereta',$detail_data);
 	}
 
 }

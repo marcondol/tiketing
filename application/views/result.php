@@ -16,7 +16,7 @@
     <!-- Stylesheets-->
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,900">
     <link rel="stylesheet" href="<?=base_url()?>/assets/css/style.css">
-		
+
   </head>
   <body>
     <!-- Page-->
@@ -45,30 +45,30 @@
                         <?php foreach($pesawat as $item){
                             foreach ($item['schedule'] as $value) {
                               $tmp_class = (array)$value->class;
-                              foreach ($tmp_class as $class_val) {                                
+                              foreach ($tmp_class as $class_val) {
                               ?>
                               <tr>
                                 <td><?=$value->airline_name?></td>
                                 <td><?=$value->fno?></td>
-                                <td><?=$value->date.' '.$value->etd?></td>
-                                <td><?=$value->date.' '.$value->eta?></td>
+                                <td><?=preg_replace("/(\d{1,4})( |-|\/)(\d{1,2})( |-|\/)(\d{1,2})/","$5-$3-$1",$value->date).' '.$value->etd?></td>
+                                <td><?=preg_replace("/(\d{1,4})( |-|\/)(\d{1,2})( |-|\/)(\d{1,2})/","$5-$3-$1",$value->date).' '.$value->eta?></td>
                                 <td><?=$value->type?></td>
                                 <td><?=$class_val->price?></td>
                                 <td><button class="btn btn-primary pesan" data-session_id='<?=urlencode(base64_encode('{"session_id":"'.$item['ses_id'].'","flight_no":"'.$value->fno.'","flight_class":"'.$class_val->class_id.'"}'))?>'>Pesan</td>
-                            </tr>      
+                            </tr>
                           <?php
                               }
                             }
-                        
+
                         }?>
                       </thead>
                       <tbody>
-                        
+
                       </tbody>
                     </table>
                   </div>
                 </div>
-                
+
               </div>
             </div>
           </div>
@@ -83,9 +83,9 @@
       $(".pesan").click(function(){
          var data = $(this).data('session_id');
          window.location.assign(`<?=base_url()?>pesawat/form_pesan/${data}`)
-      })  
+      })
     });
-    
+
     </script>
   </body>
 </html>

@@ -4,7 +4,7 @@ class Pesawat_model extends CI_Model {
 
    public $key;
    public $url;
-   
+
    public function __construct(){
 	 parent::__construct();
 	 $this->key = $this->config->item('key');
@@ -19,27 +19,27 @@ class Pesawat_model extends CI_Model {
       curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
       curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
       curl_setopt($ch, CURLOPT_VERBOSE, true);
-      $response = curl_exec($ch);      
+      $response = curl_exec($ch);
       return json_decode($response);
    }
 
    public function get_airlines(){
       $data=array("akses_kode"=>$this->key ,
-                  "app" => "info", 
+                  "app" => "info",
                   "action"=>"get_airlines");
       return $this->post_request($data);
    }
-   
+
    public function get_airlines_connect(){
       $data=array("akses_kode"=>$this->key ,
-                  "app" => "info", 
+                  "app" => "info",
                   "action"=>"get_airlines_connect");
       return $this->post_request($data);
    }
 
    public function get_airport_connect(){
       $data=array("akses_kode"=>$this->key ,
-                  "app" => "info", 
+                  "app" => "info",
                   "action"=>"get_airport",
                   "country"=>"INDONESIA"
                );
@@ -48,7 +48,7 @@ class Pesawat_model extends CI_Model {
 
    public function get_departure_airport($airline_id){
       $data=array("akses_kode"=>$this->key ,
-                  "app" => "info", 
+                  "app" => "info",
                   "action"=>"get_departure_airport",
                   "airline"=>"$airline_id"
                );
@@ -57,7 +57,7 @@ class Pesawat_model extends CI_Model {
 
    public function get_arrival_airport($airline_id, $airport){
       $data=array("akses_kode"=>$this->key ,
-                  "app" => "info", 
+                  "app" => "info",
                   "action"=>"get_arrival_airport",
                   "airline"=>"$airline_id",
                   "departure" =>"$airport"
@@ -67,23 +67,23 @@ class Pesawat_model extends CI_Model {
 
    public function get_airport_rute($airport_id){
       $data=array("akses_kode"=>$this->key ,
-                  "app" => "flight", 
+                  "app" => "flight",
                   "action"=>"get_rute",
                   "departure" =>"$airport_id"
                );
       return $this->post_request($data);
    }
 
-   public function get_search_flight($data){     
+   public function get_search_flight($data){
       $data=array("akses_kode"=>$this->key ,
-                  "app" => "flight", 
+                  "app" => "flight",
                   'action' => "search_multi",
                   'airline' => $data['airline'],
                   'roundtrip' => $data['roundtrip'],
                   'from' => $data['from'],
                   'to' => $data['to'],
                   'depart' => $data['depart'],
-                  'return' => $data['return'],
+                  // 'return' => $data['return'],
                   'adult' => $data['adult'],
                   'child' => $data['child'],
                   'infant' => $data['infant']
@@ -93,7 +93,7 @@ class Pesawat_model extends CI_Model {
 
    public function get_flight_detail($data){
       $data=array("akses_kode"=>$this->key ,
-                  "app" => "flight", 
+                  "app" => "flight",
                   "action" => "search_detail",
                   "session_id" =>$data["session_id"],
                   "flightno_1" =>$data["flight_no"],
@@ -102,6 +102,26 @@ class Pesawat_model extends CI_Model {
                   // "class_id_2" =>$data["flight_class"],
                  );
       return array($this->post_request($data));
+   }
+
+   public function get_flight_book($data_post){
+      $data=array("akses_kode"=>$this->key ,
+                  "app" => "flight",
+                  "action" => "search_book"
+                 );
+      $data = array_merge($data, $data_post);
+      $res = array($this->post_request($data));
+      $this->save_order($res);
+      return $res;
+   }
+
+   public function save_order($data){
+     $insert_data = array(
+         "book_id" => $data[0]->book_id,
+         "order_type" => "pesawat",
+         "order_dttm"=> date("Y-m-d H:i:s")
+     );
+     $this->db->insert("misterklik_order",$insert_data);
    }
 
 }

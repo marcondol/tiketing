@@ -24,18 +24,23 @@
       <!-- Page Header-->
       <?php $this->load->view('header/head')?>
       <!-- Page Content-->
-      <main class="page-content">              
+      <main class="page-content">
         <section class="section-60 section-md-top-20">
           <div class="shell">
             <div class="section-top-10 section-md-top-20">
               <h4 class="text-bold text-capitalize">Pemesanan</h4>
               <div class="offset-md-top-30 offset-top-20 range range-xs-center">
                 <div class="cell-md-8">
-               
-                <?php
-                // print_r($pesawat_detail);
-                foreach ($pesawat_detail as $value) {
 
+                <?php
+
+                foreach ($pesawat_detail as $value) {
+                  if($value->error_no != 0 ||  $value == ""){
+                     echo "<h5>Maaf Terjadi Error Mohon coba lagi</h5>";
+                     echo $value->error_msg;
+
+                     break;
+                  }
                 ?>
                 </pre>
                 <table class="table table-striped text-left">
@@ -60,22 +65,22 @@
                               <td><?=$item->to.' - '.$value->depart_detail->eta?></td>
                            </tr>
 
-                        <?php                           
+                        <?php
                               }
                            }
                         ?>
                         <?php
-                           
+
                            foreach ($value->depart_detail->price as $key=>$prices) {
                               if($key != 'comisi'){
                               ?>
                         <tr>
                            <td colspan="3"><?=$key?></td>
-                           
+
                            <td><?=(($key=='total')?$prices:$prices->total)?></td>
                         </tr>
-                        <?php   
-                              }                        
+                        <?php
+                              }
                            }
                         ?>
                       </tbody>
@@ -88,107 +93,108 @@
                      <div class="cell-sm-6">
                       <div class="form-group">
                         <label for="contact-name" class="form-label form-label-outside">Nama</label>
-                        <input id="contact-name" type="text" name="name" data-constraints="@Required" class="form-control form-control-gray">
+                        <input id="contact-name" type="text" name="cust_name" data-constraints="@Required" class="form-control form-control-gray">
                         <input type="hidden" name="session_id" value="<?=$value->session_id?>">
                       </div>
                      </div>
                      <div class="cell-sm-6 offset-top-20 offset-sm-top-0">
                       <div class="form-group">
                         <label for="telephone" class="form-label form-label-outside">No Telepon</label>
-                        <input id="telephone" type="text" name="telephone" data-constraints="@Required" class="form-control form-control-gray">
+                        <input id="telephone" type="text" name="cust_phone" data-constraints="@Required" class="form-control form-control-gray">
                       </div>
                      </div>
                      <div class="cell-sm-6 offset-top-20">
                       <div class="form-group">
                         <label for="contact-email" class="form-label form-label-outside">E-mail</label>
-                        <input id="contact-email" type="email" name="email" data-constraints="@Required @Email" class="form-control form-control-gray">
+                        <input id="contact-email" type="email" name="cust_email" data-constraints="@Required @Email" class="form-control form-control-gray">
                       </div>
                      </div>
-
                      <?php
-                      $n=1;     
+                      $n=1;
                      foreach ($value->depart_detail->price as $key=>$prices) {
                         if($key != 'comisi' && $key != 'total'){
+                           for($i=0; $i<$prices->pax; $i++){
                         ?>
-                        <div class="cell-sm-12 offset-top-40">
-                           <h5>Penumpang <?=$n?></h5>
-                        </div>
-                        <div class="cell-sm-6 offset-top-20">
-                         <div class="form-group">
-                           <label for="pax_type" class="form-label form-label-outside">Pax Type</label>
-                           <input id="pax_type" type="text" name="pax_type_<?=$n?>" data-constraints="@Required" value="<?=$key?>" class="form-control form-control-gray">
-                         </div>
-                        </div>
+                              <div class="cell-sm-12 offset-top-40">
+                                 <h5>Penumpang <?=$n?></h5>
+                              </div>
+                              <div class="cell-sm-6 offset-top-20">
+                              <div class="form-group">
+                                 <label for="pax_type" class="form-label form-label-outside">Pax Type</label>
+                                 <input id="pax_type" type="text" name="pax_type_<?=$n?>" data-constraints="@Required" value="<?=$key?>" class="form-control form-control-gray">
+                              </div>
+                              </div>
 
-                        <div class="cell-sm-6 offset-top-20">
-                         <div class="form-group">
-                           <label for="title" class="form-label form-label-outside">Tittle</label>
-                           <select id="title" type="text" name="title_<?=$n?>" data-constraints="@Required " >
-                              <option value="mr">Tuan</option>
-                              <option value="ms">Nyonya</option>
-                              <option value="mrs">Nona</option>
-                              <option value="chd">Anak</option>
-                              <option value="inf">Bayi</option>
-                           </select>
-                         </div>
-                        </div>
+                              <div class="cell-sm-6 offset-top-20">
+                              <div class="form-group">
+                                 <label for="title" class="form-label form-label-outside">Tittle</label>
+                                 <select id="title" type="text" name="title_<?=$n?>" data-constraints="@Required " >
+                                    <option value="mr">Tuan</option>
+                                    <option value="ms">Nyonya</option>
+                                    <option value="mrs">Nona</option>
+                                    <option value="chd">Anak</option>
+                                    <option value="inf">Bayi</option>
+                                 </select>
+                              </div>
+                              </div>
 
-                        <div class="cell-sm-6 offset-top-20">
-                         <div class="form-group">
-                           <label for="firs_name" class="form-label form-label-outside">Nama Depan</label>
-                           <input id="firs_name" type="text" name="firs_name_<?=$n?>" data-constraints="@Required " class="form-control form-control-gray">
-                         </div>
-                        </div>
+                              <div class="cell-sm-6 offset-top-20">
+                              <div class="form-group">
+                                 <label for="firs_name" class="form-label form-label-outside">Nama Depan</label>
+                                 <input id="firs_name" type="text" name="first_name_<?=$n?>" data-constraints="@Required " class="form-control form-control-gray">
+                              </div>
+                              </div>
 
-                        <div class="cell-sm-6 offset-top-20">
-                         <div class="form-group">
-                           <label for="last_name" class="form-label form-label-outside">Nama Belakang</label>
-                           <input id="last_name" type="text" name="last_name_<?=$n?>" data-constraints="@Required " class="form-control form-control-gray">
-                         </div>
-                        </div>
+                              <div class="cell-sm-6 offset-top-20">
+                              <div class="form-group">
+                                 <label for="last_name" class="form-label form-label-outside">Nama Belakang</label>
+                                 <input id="last_name" type="text" name="last_name_<?=$n?>" data-constraints="@Required " class="form-control form-control-gray">
+                              </div>
+                              </div>
 
-                        <div class="cell-sm-6 offset-top-20">
-                         <div class="form-group">
-                           <label for="id_no" class="form-label form-label-outside">No Identitas</label>
-                           <input id="id_no" type="text" name="id_no_<?=$n?>" data-constraints="@Required " class="form-control form-control-gray">
-                         </div>
-                        </div>
+                              <div class="cell-sm-6 offset-top-20">
+                              <div class="form-group">
+                                 <label for="id_no" class="form-label form-label-outside">No Identitas</label>
+                                 <input id="id_no" type="text" name="id_no_<?=$n?>" data-constraints="@Required " class="form-control form-control-gray">
+                              </div>
+                              </div>
 
-                        <div class="cell-sm-6 offset-top-20">
-                         <div class="form-group">
-                           <label for="birthdate" class="form-label form-label-outside">Tanggal Lahir</label>
-                           <input id="birthdate" type="text" data-time-picker="dateall" name="birthdate_<?=$n?>" data-constraints="@Required " class="form-control form-control-gray">
-                         </div>
-                        </div>
+                              <div class="cell-sm-6 offset-top-20">
+                              <div class="form-group">
+                                 <label for="birthdate" class="form-label form-label-outside">Tanggal Lahir</label>
+                                 <input id="birthdate" type="text" data-time-picker="dateall" name="birthdate_<?=$n?>" data-constraints="@Required " class="form-control form-control-gray">
+                              </div>
+                              </div>
 
-                        <div class="cell-sm-6 offset-top-20">
-                         <div class="form-group">
-                           <label for="pasport" class="form-label form-label-outside">No pasport</label>
-                           <input id="pasport" type="text" name="pasport_<?=$n?>" data-constraints="@Required " class="form-control form-control-gray">
-                         </div>
-                        </div>
+                              <!-- <div class="cell-sm-6 offset-top-20">
+                              <div class="form-group">
+                                 <label for="pasport" class="form-label form-label-outside">No pasport</label>
+                                 <input id="pasport" type="text" name="paspor_<?=$n?>" class="form-control form-control-gray">
+                              </div>
+                              </div>
 
-                        <div class="cell-sm-6 offset-top-20">
-                         <div class="form-group">
-                           <label for="expire_pasport" class="form-label form-label-outside">Expire Pasport</label>
-                           <input id="expire_pasport" type="text" data-time-picker="dateall" name="expire_pasport_<?=$n?>" data-constraints="@Required " class="form-control form-control-gray">
-                         </div>
-                        </div>
+                              <div class="cell-sm-6 offset-top-20">
+                              <div class="form-group">
+                                 <label for="expire_pasport" class="form-label form-label-outside">Expire Pasport</label>
+                                 <input id="expire_pasport" type="text" data-time-picker="dateall" name="expire_paspor_<?=$n?>" class="form-control form-control-gray">
+                              </div>
+                              </div>
 
-                        <div class="cell-sm-6 offset-top-20">
-                         <div class="form-group">
-                           <label for="country_pasport" class="form-label form-label-outside">Negara Passport</label>
-                           <input id="country_pasport" type="text" name="country_pasport_<?=$n?>" data-constraints="@Required " class="form-control form-control-gray">
-                         </div>
-                        </div>
-                        <br>
-                        <?php  
-                              $n++; 
-                              }                        
+                              <div class="cell-sm-6 offset-top-20">
+                              <div class="form-group">
+                                 <label for="country_pasport" class="form-label form-label-outside">Negara Passport</label>
+                                 <input id="country_pasport" type="text" name="country_paspor_<?=$n?>" class="form-control form-control-gray">
+                              </div>
+                              </div> -->
+                              <br>
+                        <?php
+                              $n++;
+                                 }
+                              }
                            }
                         ?>
-                     
-                     <div class="cell-md-12 offset-top-20">                      
+
+                     <div class="cell-md-12 offset-top-20">
                       <div class="offset-top-20 text-center text-md-left">
                         <button style="min-width: 140px;" type="submit" class="btn btn-primary btn-sm">Send</button>
                       </div>
@@ -201,7 +207,7 @@
               </div>
             </div>
           </div>
-        </section>        
+        </section>
       </main>
       <!-- Page Footer-->
       <?php $this->load->view('footer/foot') ?>

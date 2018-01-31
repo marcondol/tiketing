@@ -6,7 +6,7 @@ class Pesawat extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('pesawat_model');
-		
+
 	}
 
 	public function index(){
@@ -17,12 +17,12 @@ class Pesawat extends CI_Controller {
 
 	public function result(){
 		$posted_data = $this->input->post();
-		$airlines = $this->pesawat_model->get_airlines();			
+		$airlines = $this->pesawat_model->get_airlines();
 		$post_data['roundtrip'] = 'oneway';//$posted_data['roundtrip'];
 		$post_data['from'] =$posted_data['from'];
 		$post_data['to'] =$posted_data['to'];
 		$post_data['depart'] = preg_replace('/(\d{1,2}).(\d{1,2}).(\d{1,4})/', '$3-$2-$1', $posted_data['departure']);
-		$post_data['return'] =preg_replace('/(\d{1,2}).(\d{1,2}).(\d{1,4})/', '$3-$2-$1', $posted_data['return']);
+		// $post_data['return'] =preg_replace('/(\d{1,2}).(\d{1,2}).(\d{1,4})/', '$3-$2-$1', $posted_data['return']);
 		$post_data['adult'] =$posted_data['adult'];
 		$post_data['child'] =$posted_data['child'];
 		$post_data['infant'] =0;
@@ -45,9 +45,12 @@ class Pesawat extends CI_Controller {
 	}
 
 	public function order(){
-		$arr_data = json_decode(base64_decode(urldecode($session_id)),true);
-		$detail_data['pesawat_detail'] = $this->pesawat_model->get_flight_detail($arr_data);
-		$this->load->view('form_pesan',$detail_data);
+      $arr_data = $this->input->post();
+      foreach($arr_data as $key=>$val){
+         $data_post[$key] = preg_replace('/(\d{1,2})( |-|\/)(\d{1,2})( |-|\/)(\d{1,4})/', '$5-$3-$1', $val);
+      }
+      $detail_data['pesawat_detail'] = $this->pesawat_model->get_flight_book($data_post);
+		$this->load->view('sukses_order_pesawat',$detail_data);
 	}
 
 }

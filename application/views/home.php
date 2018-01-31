@@ -43,7 +43,7 @@ $kota = [
                     <!-- Responsive-tabs-->
                     <ul class="nav-custom-tabs resp-tabs-list">
                       <li class="nav-item"><span class="icon mdi mdi-airplane"></span><span>Pesawat</span></li>
-                      <li class="nav-item"><span class="icon mdi mdi-hotel"></span><span>Hotel</span></li>
+                      <!-- <li class="nav-item"><span class="icon mdi mdi-hotel"></span><span>Hotel</span></li> -->
                       <li class="nav-item"><span class="icon mdi mdi-train"></span><span>Kereta API</span></li>
                     </ul>
                     <div class="resp-tabs-container nav-custom-tab nav-custom-wide">
@@ -89,28 +89,28 @@ $kota = [
                             <div class="range offset-top-15">
                               <div class="cell-xs">
                                 <div class="form-group">
-                                  <label class="form-group-label">Tanggal keberangkatan</label>
+                                  <label class="form-group-label">Tanggal Berangkat</label>
                                   <input type="text" data-time-picker="date" data-constraints="@Required" name="departure" class="form-control">
                                 </div>
                               </div>
-                              <div class="cell-xs offset-top-15 offset-xs-top-0">
+                              <!-- <div class="cell-xs offset-top-15 offset-xs-top-0">
                                 <div class="form-group">
-                                  <label class="form-group-label">Tanggal Kedatangan</label>
+                                  <label class="form-group-label">Tanggal Kepulangan</label>
                                   <input type="text" data-time-picker="date" data-constraints="@Required" name="return" class="form-control">
                                 </div>
-                              </div>
+                              </div> -->
                               <div class="cell-sm-6 cell-lg-4 offset-top-15 offset-sm-top-0">
                                 <div class="range">
                                   <div class="cell-xs-6">
                                     <div class="form-group">
                                       <label class="form-group-label">Anak-anak (16+)</label>
-                                      <input type="number" name="adult" min="0" value="2" class="form-control">
+                                      <input type="number" name="adult" min="0" value="2" step="1" class="form-control">
                                     </div>
                                   </div>
                                   <div class="cell-xs-6 offset-top-15 offset-xs-top-0">
                                     <div class="form-group">
                                       <label class="form-group-label">Bayi</label>
-                                      <input type="number" name="child" min="0" value="0" class="form-control">
+                                      <input type="number" name="child" min="0" value="0" step="1" class="form-control">
                                     </div>
                                   </div>
                                 </div>
@@ -122,81 +122,7 @@ $kota = [
                           </div>
                         </form>
                       </div>
-                      <div>
-                        <form method="post" action="hotel/result" class="small">
-                          <div class="range">
-                            <div class="cell-md-8">
-                            </div>
-                            <div class="range offset-top-15">
-                              <div class="cell-xs">
-                                <div class="form-group">
-                                  <label class="form-group-label">Tujuan Tempat Menginap</label>
-                                  <!--Select 2-->
-                                  <select name="city" data-minimum-results-for-search="Infinity" class="form-control select-filter">
-                                       <?php foreach($kota as $val){
-                                          ?>
-                                          <option value="<?=$val?>"><?=$val?></option>
-                                          <?php
-                                       }?>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="cell-xs offset-top-15 offset-xs-top-0">
-                                <div class="form-group">
-                                  <label class="form-group-label">Jumlah Kamar</label>
-                                  <input type="number" name="room" min="0" value="1" class="form-control">
-                                </div>
-                              </div>
-                              <!-- <div class="cell-md-1-5 offset-top-10 offset-md-top-0">
-                                <div class="form-group">
-                                  <label class="form-group-label">Star rating</label>
-                                  <select data-minimum-results-for-search="Infinity" class="form-control select-filter">
-                                    <option>5</option>
-                                    <option value="2">5</option>
-                                    <option value="3">4</option>
-                                    <option value="4">3</option>
-                                    <option value="5">2</option>
-                                    <option value="6">1</option>
-                                  </select>
-                                </div>
-                              </div> -->
-                            </div>
-                            <div class="range offset-top-15">
-                              <div class="cell-xs">
-                                <div class="form-group">
-                                  <label class="form-group-label">Check-in</label>
-                                  <input type="text" name="ci" data-time-picker="date" data-constraints="@Required" name="ci" class="form-control">
-                                </div>
-                              </div>
-                              <div class="cell-xs offset-top-15 offset-xs-top-0">
-                                <div class="form-group">
-                                  <label class="form-group-label">Check-out</label>
-                                  <input type="text" name="co" data-time-picker="date" data-constraints="@Required" name="co" class="form-control">
-                                </div>
-                              </div>
-                              <div class="cell-sm-6 cell-lg-4 offset-top-15 offset-sm-top-0">
-                                <div class="range">
-                                  <div class="cell-xs-6">
-                                    <div class="form-group">
-                                      <label class="form-group-label">Dewasa (16+)</label>
-                                      <input name="adult" type="number" min="0" value="2" class="form-control">
-                                    </div>
-                                  </div>
-                                  <div class="cell-xs-6 offset-top-15 offset-xs-top-0">
-                                    <div class="form-group">
-                                      <label class="form-group-label">Anak-anak</label>
-                                      <input name="child" type="number" min="0" value="0" class="form-control">
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="cell-lg-clear-flex cell-sm-bottom cell-lg text-center text-lg-right offset-top-15 offset-lg-top-0">
-                                <button action="submit" class="btn btn-primary btn-sm btn-naira btn-naira-up"><span class="icon fa-search"></span><span>Cari Hotel</span></button>
-                              </div>
-                            </div>
-                          </div>
-                        </form>
-                      </div>
+
                       <div>
                         <form method="post" action="kereta/result" class="small">
                           <div class="range">

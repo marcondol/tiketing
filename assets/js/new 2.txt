@@ -1,0 +1,12 @@
+- sebelum di aprove, tidak bisa membuat permintaan baru
+- aprove sampai receive max 2x24jam
+- clearing akhr bulan transaksi
+
+
+jika terima antar satelit (konfigurasi);
+
+select * from xocp_inv_stock_opname_history where obj_id='MDVx016514';
+
+fungsi snapshot
+
+mencari selisih receive dan distribusi yang beda periode

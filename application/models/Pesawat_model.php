@@ -116,12 +116,15 @@ class Pesawat_model extends CI_Model {
    }
 
    public function save_order($data){
-     $insert_data = array(
-         "book_id" => $data[0]->book_id,
-         "order_type" => "pesawat",
-         "order_dttm"=> date("Y-m-d H:i:s")
-     );
-     $this->db->insert("misterklik_order",$insert_data);
+      if(isset($data[0]->book_id)){
+         $insert_data = array(
+            "book_id" => $data[0]->book_id,
+            "book_code" => $data[0]->depart->book_info->book_code,
+            "order_type" => "pesawat",
+            "order_dttm"=> date("Y-m-d H:i:s")
+        );
+        $this->db->insert("misterklik_order",$insert_data);
+      }
    }
 
 }

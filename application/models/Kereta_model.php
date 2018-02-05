@@ -62,19 +62,20 @@ class Kereta_model extends CI_Model {
                  );
       $data = array_merge($data, $data_post);
       $res = array($this->post_request($data));
-      echo "<pre>";
-      print_r($data);
-      print_r($res);
-      // $this->save_order($res);
+      $this->save_order($res);
       return $res;
    }
 
    public function save_order($data){
-     $insert_data = array(
-         "book_id" => $data[0]->book_id,
-         "order_type" => "kereta",
-         "order_dttm"=> date("Y-m-d H:i:s")
-     );
-     $this->db->insert("misterklik_order",$insert_data);
+      if(isset($data[0]->book_id)){
+         $insert_data = array(
+            "book_id" => $data[0]->book_id,
+            "book_code" => $data[0]->detail_data->depart->schedule->book_code,
+            "order_type" => "kereta",
+            "order_dttm"=> date("Y-m-d H:i:s")
+         );
+         $this->db->insert("misterklik_order",$insert_data);
+      }
+
    }
 }

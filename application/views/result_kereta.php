@@ -2,12 +2,12 @@
 <html lang="en" class="wide smoothscroll wow-animation">
   <head>
     <!-- Site Title-->
-    <title>FAQ page</title>
+    <title>Hasil Pencarian</title>
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="<?=base_url()?>/assets/images/icon_mk.png" type="image/x-icon">
     <!-- Stylesheets-->
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,900">
     <link rel="stylesheet" href="<?=base_url()?>/assets/css/style.css">

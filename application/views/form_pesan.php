@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
-    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="<?=base_url()?>/assets/images/icon_mk.png" type="image/x-icon">
     <!-- Stylesheets-->
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,900">
     <link rel="stylesheet" href="<?=base_url()?>/assets/css/style.css">
@@ -36,7 +36,7 @@
 
                 foreach ($pesawat_detail as $value) {
                   if($value->error_no != 0 ||  $value == ""){
-                     echo "<h5>Maaf Terjadi Error Mohon coba lagi</h5>";
+                     echo "<h5>Maaf Terjadi Error mohon refresh Halaman ini</h5>";
                      echo $value->error_msg;
 
                      break;

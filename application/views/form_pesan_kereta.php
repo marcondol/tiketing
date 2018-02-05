@@ -4,12 +4,12 @@
 <html lang="en" class="wide smoothscroll wow-animation">
   <head>
     <!-- Site Title-->
-    <title>Forms</title>
+    <title>Form Pemesanan</title>
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
-    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="<?=base_url()?>/assets/images/icon_mk.png" type="image/x-icon">
     <!-- Stylesheets-->
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,900">
     <link rel="stylesheet" href="<?=base_url()?>/assets/css/style.css">
@@ -31,17 +31,15 @@
               <h4 class="text-bold text-capitalize">Pemesanan</h4>
               <div class="offset-md-top-30 offset-top-20 range range-xs-center">
                 <div class="cell-md-8">
-                <pre>
                 <?php
                   // print_r($kereta_detail);
                 foreach($kereta_detail as $value) {
-                  print_r($value);
+                  // print_r($   value);
                 ?>
-                </pre>
                 <table class="table table-striped text-left">
                       <tbody>
                         <tr>
-                           <td colspan="4"><?=$value->detail_info->depart->train_name.' - '.$value->detail_info->depart->from_st_name.' '.$value->detail_info->depart->to_st_name.' '.$value->detail_info->depart->class.' '.$value->detail_info->depart->sub_class?></td>
+                           <td colspan="4"><?=$value->detail_info->depart->train_name.' - '.$value->detail_info->depart->from_st_name.' -> '.$value->detail_info->depart->to_st_name.' '.$value->detail_info->depart->class.' '.$value->detail_info->depart->sub_class?></td>
                         </tr>
                         <tr>
                            <td><?=$value->detail_info->depart->train_name?></td>
@@ -101,19 +99,19 @@
                       <div class="form-group">
                          <input type="hidden" name="session_id" value="<?=$value->session_id?>">
                         <label for="contact-name" class="form-label form-label-outside">Nama</label>
-                        <input id="contact-name" type="text" name="cust_name" data-constraints="@Required" class="form-control form-control-gray">
+                        <input id="contact-name" type="text" name="customer_name" data-constraints="@Required" class="form-control form-control-gray">
                       </div>
                      </div>
                      <div class="cell-sm-6 offset-top-20 offset-sm-top-0">
                       <div class="form-group">
                         <label for="telephone" class="form-label form-label-outside">No Telepon</label>
-                        <input id="telephone" type="text" name="cust_phone" data-constraints="@Required" class="form-control form-control-gray">
+                        <input id="telephone" type="text" name="customer_phone" data-constraints="@Required" class="form-control form-control-gray">
                       </div>
                      </div>
                      <div class="cell-sm-6 offset-top-20">
                       <div class="form-group">
                         <label for="contact-email" class="form-label form-label-outside">E-mail</label>
-                        <input id="contact-email" type="email" name="cust_email" data-constraints="@Required @Email" class="form-control form-control-gray">
+                        <input id="contact-email" type="email" name="customer_email" data-constraints="@Required @Email" class="form-control form-control-gray">
                       </div>
                      </div>
 
@@ -125,8 +123,8 @@
                         </div>
                         <div class="cell-sm-6 offset-top-20">
                          <div class="form-group">
-                           <label for="pax_type" class="form-label form-label-outside">Tipe Penumpang</label>
-                           <input id="pass_type" type="text" name="pax_type_<?=$x?>" data-constraints="@Required" readonly value="<?=$adult_type?>" class="form-control form-control-gray">
+                           <label for="pass_type" class="form-label form-label-outside">Tipe Penumpang</label>
+                           <input id="pass_type" type="text" name="pass_type_<?=$x?>" data-constraints="@Required" readonly value="<?=$adult_type?>" class="form-control form-control-gray">
                          </div>
                         </div>
 
